@@ -1,0 +1,6 @@
+
+__pycache__/
+.venv/
+components/globals.py
+assets/
+components/materia_descartado.py
