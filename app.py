@@ -7,7 +7,7 @@ from telegram.ext import Application, ContextTypes, MessageHandler, filters, Com
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
 telegram_token=globals.telegram_token
-date_libranza=datetime.date.today()
+#date_libranza=datetime.date.today()
 
 #menu inicio con las opciones de turno
 
