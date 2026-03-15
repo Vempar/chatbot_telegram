@@ -35,11 +35,10 @@ class Libranza_state:
         cls.fecha5 = cls.fecha4 + 1
         cls.turno = 1
         
-        # ciclo que permite que la fecha se mantenga en el rango de 1 a 35 (según la lógica original)
-        # Nota: el código original tenía un loop y luego un modulo. Lo simplifico.
+        # se reduce la fecha a un rango de 1 a 35 para que calcule la coincidencia con el ciclo de libranzas
         cls.fecha5 = ((cls.fecha5 - 1) % 35) + 1
         
-        # recorre el turno y busca coincidencias con fecha5
+        # recorre el turno y busca y asigna un valor para determinar si el ususario libra
         if cls.turno == 1:   
             if cls.fecha5 in cls.turno1:
                 cls.libras = True

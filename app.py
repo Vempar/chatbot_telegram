@@ -75,12 +75,36 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         markup_turnos = ReplyKeyboardMarkup(globals.turnos_keyboard, one_time_keyboard=False, resize_keyboard=True)
         await update.message.reply_text("Selecciona una opción de turno:", reply_markup=markup_turnos)
         
-    elif text == "turno 1":
+    elif text == "1️⃣" or text.lower() == "turno 1":
         await update.message.reply_document(document="./assets/Turno1.pdf")
         await update.message.reply_text(globals.var_turno)
         # Volvemos al teclado principal
         await update.message.reply_text("¿En qué más puedo ayudarte?", reply_markup=markup)
-        
+    elif text == "2️⃣" or text.lower() == "turno 2":
+        await update.message.reply_document(document="./assets/Turno2.pdf")
+        await update.message.reply_text(globals.var_turno)
+        # Volvemos al teclado principal
+        await update.message.reply_text("¿En qué más puedo ayudarte?", reply_markup=markup)
+    elif text == "3️⃣" or text.lower() == "turno 3":
+        await update.message.reply_document(document="./assets/Turno3.pdf")
+        await update.message.reply_text(globals.var_turno)
+        # Volvemos al teclado principal
+        await update.message.reply_text("¿En qué más puedo ayudarte?", reply_markup=markup)
+    elif text == "4️⃣" or text.lower() == "turno 4":
+        await update.message.reply_document(document="./assets/Turno4.pdf")
+        await update.message.reply_text(globals.var_turno)
+        # Volvemos al teclado principal
+        await update.message.reply_text("¿En qué más puedo ayudarte?", reply_markup=markup)
+    elif text == "5️⃣" or text.lower() == "turno 5":
+        await update.message.reply_document(document="./assets/Turno5.pdf")
+        await update.message.reply_text(globals.var_turno)
+        # Volvemos al teclado principal
+        await update.message.reply_text("¿En qué más puedo ayudarte?", reply_markup=markup)
+    elif text == "🛠️" or text.lower() == "taller":
+        await update.message.reply_document(document="./assets/Taller.pdf")
+        await update.message.reply_text(globals.var_turno)
+        # Volvemos al teclado principal
+        await update.message.reply_text("¿En qué más puedo ayudarte?", reply_markup=markup)
     elif text == "📄 Convenio" or text.lower() == "convenio":
         await update.message.reply_document(document="./assets/CONVENIO_RBU.pdf")
         await update.message.reply_text('¡Aquí tienes tu convenio!')
