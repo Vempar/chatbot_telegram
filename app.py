@@ -1,5 +1,6 @@
 import logging
 import datetime
+import os
 import components.globals as globals
 import components.libranza as libranza
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardMarkup, CallbackQuery
@@ -8,6 +9,23 @@ from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
 telegram_token=globals.telegram_token
 #date_libranza=datetime.date.today()
+def buscar(update, context):
+    mensaje = update.message.text.lower()
+    archivo = "./assets/convenio.txt"  # Ruta al archivo que contiene la información
+
+    if not os.path.exists(archivo):
+        update.message.reply_text("❌ El archivo no existe.")
+        return
+
+    with open(archivo, "r", encoding="utf-8") as f:
+        contenido = f.read()
+
+    if mensaje in contenido.lower():
+        respuesta = f"✅ Información encontrada:\n\n{contenido.split(mensaje)[0] + mensaje + contenido.split(mensaje)[1]}"
+        update.message.reply_text(respuesta)
+    else:
+        update.message.reply_text("🔍 No se encontró la información solicitada.")
+
 
 #menu inicio con las opciones de turno
 
@@ -125,6 +143,8 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await libranza_command(update, context)
     elif text == "❓ Ayuda":
         await help_command(update, context)
+    elif text.lower == "buscar":
+        await buscar(update, context)
     else:
         await update.message.reply_text("Lo siento, todavía no sé hacer eso. ", reply_markup=markup)
 #configuramos el logging para que muestre los errores
@@ -140,9 +160,11 @@ def main():
     bot.add_handler(CommandHandler("start", start))
     bot.add_handler(CommandHandler("help", help_command))
     bot.add_handler(CommandHandler("libranza", libranza_command))
+    bot.add_handler(CommandHandler("buscar", buscar))
     bot.add_handler(CallbackQueryHandler(inline_calendar_handler))
     bot.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, start))
     bot.add_handler(MessageHandler(filters.PHOTO, photo_handler))
+    bot.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, buscar))
     bot.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == '__main__':
