@@ -3,7 +3,7 @@ import datetime as dt
 
 class Libranza_state:
     text = dt.date.today()
-    libras_value1 = "  "
+    libras_value1 = 1
     fecha3 = dt.date(2026, 1, 1)
     turno = 1
     libras = False
@@ -33,7 +33,7 @@ class Libranza_state:
         # Calculamos la diferencia de días
         cls.fecha4 = (cls.text - cls.fecha3).days
         cls.fecha5 = cls.fecha4 + 1
-        cls.turno = 1
+        cls.turno = cls.libras_value1
         
         # se reduce la fecha a un rango de 1 a 35 para que calcule la coincidencia con el ciclo de libranzas
         cls.fecha5 = ((cls.fecha5 - 1) % 35) + 1
@@ -43,9 +43,25 @@ class Libranza_state:
             if cls.fecha5 in cls.turno1:
                 cls.libras = True
                 cls.libras_value1 = "Enhorabuena, libras"
-            else:
-                cls.libras = False
-                cls.libras_value1 = "Lo siento, no libras"
+        elif cls.turno == 2:   
+            if cls.fecha5 in cls.turno2:
+                cls.libras = True
+                cls.libras_value1 = "Enhorabuena, libras"
+        elif cls.turno == 3:   
+            if cls.fecha5 in cls.turno2:
+                cls.libras = True
+                cls.libras_value1 = "Enhorabuena, libras"
+        elif cls.turno == 4:   
+            if cls.fecha5 in cls.turno4:
+                cls.libras = True
+                cls.libras_value1 = "Enhorabuena, libras"
+        elif cls.turno == 5:   
+            if cls.fecha5 in cls.turno5:
+                cls.libras = True
+                cls.libras_value1 = "Enhorabuena, libras"        
+        else:
+            cls.libras = False
+            cls.libras_value1 = "Lo siento, no libras"
         
         return cls.libras_value1
 

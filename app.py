@@ -3,29 +3,12 @@ import datetime
 import os
 import components.globals as globals
 import components.libranza as libranza
-from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardMarkup, CallbackQuery
+from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import Application, ContextTypes, MessageHandler, filters, CommandHandler, CallbackQueryHandler
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
 telegram_token=globals.telegram_token
 #date_libranza=datetime.date.today()
-def buscar(update, context):
-    mensaje = update.message.text.lower()
-    archivo = "./assets/convenio.txt"  # Ruta al archivo que contiene la información
-
-    if not os.path.exists(archivo):
-        update.message.reply_text("❌ El archivo no existe.")
-        return
-
-    with open(archivo, "r", encoding="utf-8") as f:
-        contenido = f.read()
-
-    if mensaje in contenido.lower():
-        respuesta = f"✅ Información encontrada:\n\n{contenido.split(mensaje)[0] + mensaje + contenido.split(mensaje)[1]}"
-        update.message.reply_text(respuesta)
-    else:
-        update.message.reply_text("🔍 No se encontró la información solicitada.")
-
 
 #menu inicio con las opciones de turno
 
@@ -57,7 +40,49 @@ async def libranza_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 async def inline_calendar_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        # El usuario ha seleccionado una fecha
+        #markup_seleccion_turnos = ReplyKeyboardMarkup(globals.seleccion_turnos_keyboard, one_time_keyboard=False, resize_keyboard=True)
+        #await query.edit_message_text(f"Has seleccionado la fecha: {result}", reply_markup=markup_seleccion_turnos)
+    """    
+    if text == '①':
+        libranza.libras_value1=1
+    elif text == '②':
+        libranza.libras_value1=2
+    elif text == '③':
+        libranza.libras_value1=3
+    elif text == '④':
+        libranza.libras_value1=4
+    elif text == '⑤':
+        libranza.libras_value1=5
+    """   
     query = update.callback_query
+    if not query:
+        return
+
+    await query.answer()
+    data = query.data
+
+    # Si estamos seleccionando turno, primero guardamos libras_value1, luego ejecutamos libranza
+    if data and data.startswith("turno_"):
+        try:
+            turno_num = int(data.split("_")[1])
+        except (IndexError, ValueError):
+            await query.message.reply_text("Turno no válido. Intenta de nuevo.")
+            return
+
+        libranza.libras_value1 = turno_num
+        fecha = context.user_data.get("libranza_fecha")
+        if not fecha:
+            await query.message.reply_text("Primero selecciona una fecha con /libranza.")
+            return
+
+        resultado_libranza = libranza.libranza(fecha)
+        await query.message.reply_text(f"Turno {turno_num} seleccionado: {resultado_libranza} para el día {fecha}")
+
+        markup = ReplyKeyboardMarkup(globals.reply_keyboard, one_time_keyboard=False, resize_keyboard=True)
+        await query.message.reply_text("¿En qué más puedo ayudarte?", reply_markup=markup)
+        return
+
     # Procesa el calendario
     result, key, step = DetailedTelegramCalendar().process(query.data)
     
@@ -67,16 +92,12 @@ async def inline_calendar_handler(update: Update, context: ContextTypes.DEFAULT_
             reply_markup=key
         )
     elif result:
-        # El usuario ha seleccionado una fecha
-        #await query.edit_message_text(f"Has seleccionado la fecha: {result}")
-        
-        # Usamos la función de libranza_state y obtenemos libras_value1
-        resultado_libranza = libranza.libranza(result)
-        
-        # Retornamos el valor libras_value1 al usuario
+    # Usamos la función de libranza_state y obtenemos libras_value1
+        resultado_libranza = libranza.libranza(result)    
+    # Retornamos el valor libras_value1 al usuario
         await query.message.reply_text(f"{resultado_libranza} para el dia {result}")
         
-        # Volvemos al teclado principal
+    # Volvemos al teclado principal
         markup = ReplyKeyboardMarkup(globals.reply_keyboard, one_time_keyboard=False, resize_keyboard=True)
         await query.message.reply_text("¿En qué más puedo ayudarte?", reply_markup=markup)
 
@@ -160,11 +181,9 @@ def main():
     bot.add_handler(CommandHandler("start", start))
     bot.add_handler(CommandHandler("help", help_command))
     bot.add_handler(CommandHandler("libranza", libranza_command))
-    bot.add_handler(CommandHandler("buscar", buscar))
     bot.add_handler(CallbackQueryHandler(inline_calendar_handler))
     bot.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, start))
     bot.add_handler(MessageHandler(filters.PHOTO, photo_handler))
-    bot.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, buscar))
     bot.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == '__main__':
