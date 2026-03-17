@@ -3,12 +3,11 @@ import datetime
 import os
 import components.globals as globals
 import components.libranza as libranza
-import components.token as token
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import Application, ContextTypes, MessageHandler, filters, CommandHandler, CallbackQueryHandler
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
-telegram_token=token.telegram_token
+telegram_token=os.getenv("TOKEN")
 #date_libranza=datetime.date.today()
 
 #menu inicio con las opciones de turno
