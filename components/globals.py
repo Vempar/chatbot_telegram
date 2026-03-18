@@ -1,7 +1,5 @@
 import enum as enum
 
-telegram_token='8010821425:AAHPgVHYmW-8-V7gb2PeyBT6IPZ9hrKfsrU'
-
 
 turnos_keyboard = [
         ['📅 Calendarios-Turnos'],
@@ -20,14 +18,34 @@ seleccion_turnos_keyboard = [
     ]
 
 help_text = f"""
-        /start - Inicia el bot
-        /help - Muestra este mensaje
-        vacaciones - Informacion sobre las vacaciones
-        puntualidad - Iformacion sobre el premio constancia y puntualidad
-        beneficios - informacion paga de beneficios
+       ℹ️ *Centro de ayuda - Basurrillas*
+
+Aquí tienes las opciones disponibles:
+
+/start - Inicia el bot  
+/help - Muestra este mensaje  
+
+📌 *Consultas sobre el convenio:*
+
+🏖️ vacaciones - Información sobre vacaciones  
+⏰ puntualidad - Información sobre el premio de puntualidad  
+💰 beneficios - Información sobre la paga de beneficios  
+
+💬 Puedes escribir el comando o simplemente preguntar con tus propias palabras.
+Por favor ten paciencia todavia estoy en practicas.
     """
 
-texto_start = "hola, soy basurrillas puedes preguntarme todo lo que quieras sobre nuestro convenio"
+texto_start = f"""👋 ¡Hola equipo!
+
+Soy *Basurrillas*, vuestro asistente del servicio de recogida de residuos de Madrid.
+
+Estoy aquí para facilitaros el día a día:
+
+♻️ Información del convenio  
+📅 Turnos y libranzas  
+🔧 Consultas rápidas  
+
+💬 Escríbeme lo que necesites o usa los botones de abajo 👇"""
 var_turno = "¡Aquí tienes tu turno!"
 
 premio_permanencia = """Al cumplir 15 años en el servicio de recogida de basura de Madrid Capital, se abonará al trabajador un premio

@@ -7,7 +7,8 @@ from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKey
 from telegram.ext import Application, ContextTypes, MessageHandler, filters, CommandHandler, CallbackQueryHandler
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
-telegram_token=os.getenv("TOKEN")
+#telegram_token=os.getenv("TOKEN")
+telegram_token='904248358:AAE_NAxG-Kp0VYCs-VVO709SdKcQrz4PXAU'
 #date_libranza=datetime.date.today()
 
 #menu inicio con las opciones de turno
@@ -40,10 +41,14 @@ async def libranza_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 async def inline_calendar_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        # El usuario ha seleccionado una fecha
-        #markup_seleccion_turnos = ReplyKeyboardMarkup(globals.seleccion_turnos_keyboard, one_time_keyboard=False, resize_keyboard=True)
-        #await query.edit_message_text(f"Has seleccionado la fecha: {result}", reply_markup=markup_seleccion_turnos)
-    """    
+    query = update.callback_query
+    if not query:
+        return
+
+    await query.answer()
+    data = query.data
+    text = data
+
     if text == '①':
         libranza.libras_value1=1
     elif text == '②':
@@ -54,30 +59,15 @@ async def inline_calendar_handler(update: Update, context: ContextTypes.DEFAULT_
         libranza.libras_value1=4
     elif text == '⑤':
         libranza.libras_value1=5
-    """   
-    query = update.callback_query
-    if not query:
-        return
 
-    await query.answer()
-    data = query.data
-
-    # Si estamos seleccionando turno, primero guardamos libras_value1, luego ejecutamos libranza
-    if data and data.startswith("turno_"):
-        try:
-            turno_num = int(data.split("_")[1])
-        except (IndexError, ValueError):
-            await query.message.reply_text("Turno no válido. Intenta de nuevo.")
-            return
-
-        libranza.libras_value1 = turno_num
+    if text in ['①', '②', '③', '④', '⑤']:
         fecha = context.user_data.get("libranza_fecha")
         if not fecha:
             await query.message.reply_text("Primero selecciona una fecha con /libranza.")
             return
 
         resultado_libranza = libranza.libranza(fecha)
-        await query.message.reply_text(f"Turno {turno_num} seleccionado: {resultado_libranza} para el día {fecha}")
+        await query.message.reply_text(f"Turno seleccionado: {resultado_libranza} para el día {fecha}")
 
         markup = ReplyKeyboardMarkup(globals.reply_keyboard, one_time_keyboard=False, resize_keyboard=True)
         await query.message.reply_text("¿En qué más puedo ayudarte?", reply_markup=markup)
@@ -92,14 +82,18 @@ async def inline_calendar_handler(update: Update, context: ContextTypes.DEFAULT_
             reply_markup=key
         )
     elif result:
-    # Usamos la función de libranza_state y obtenemos libras_value1
-        resultado_libranza = libranza.libranza(result)    
-    # Retornamos el valor libras_value1 al usuario
-        await query.message.reply_text(f"{resultado_libranza} para el dia {result}")
-        
-    # Volvemos al teclado principal
-        markup = ReplyKeyboardMarkup(globals.reply_keyboard, one_time_keyboard=False, resize_keyboard=True)
-        await query.message.reply_text("¿En qué más puedo ayudarte?", reply_markup=markup)
+        context.user_data["libranza_fecha"] = result
+        keyboard = [
+            [
+                InlineKeyboardButton("①", callback_data="①"),
+                InlineKeyboardButton("②", callback_data="②"),
+                InlineKeyboardButton("③", callback_data="③"),
+                InlineKeyboardButton("④", callback_data="④"),
+                InlineKeyboardButton("⑤", callback_data="⑤"),
+            ]
+        ]
+        markup_seleccion_turnos = InlineKeyboardMarkup(keyboard)
+        await query.edit_message_text(f"Has seleccionado la fecha: {result}. Ahora selecciona tu turno:", reply_markup=markup_seleccion_turnos)
 
 #detecta fotos enviadas
 async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
