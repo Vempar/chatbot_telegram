@@ -1,5 +1,13 @@
 import enum as enum
 
+turno_map = {
+        '①': 1,
+        '②': 2,
+        '③': 3,
+        '④': 4,
+        '⑤': 5,
+    }
+
 
 turnos_keyboard = [
         ['📅 Calendarios-Turnos'],
