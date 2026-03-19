@@ -44,31 +44,31 @@ class Libranza_state:
         
         # recorre el turno y busca y asigna un valor para determinar si el ususario libra
         if cls.turno == 1:
-            for item in cls.turno1:   
+            for e in cls.turno1:   
                 if cls.fecha5 in cls.turno1:
                     cls.libras = True
                     cls.libras_value1 = "Enhorabuena, libras"
                     break
         elif cls.turno == 2:
-            for item in cls.turno2:   
+            for e in cls.turno2:   
                 if cls.fecha5 in cls.turno2:
                     cls.libras = True
                     cls.libras_value1 = "Enhorabuena, libras"
                     break
         elif cls.turno == 3:
-            for item in cls.turno3:   
+            for e in cls.turno3:   
                 if cls.fecha5 in cls.turno3:
                     cls.libras = True
                     cls.libras_value1 = "Enhorabuena, libras"
                     break
         elif cls.turno == 4:  
-            for item in cls.turno4: 
+            for e in cls.turno4: 
                 if cls.fecha5 in cls.turno4:
                     cls.libras = True
                     cls.libras_value1 = "Enhorabuena, libras"
                     break
         elif cls.turno == 5: 
-            for item in cls.turno5:  
+            for e in cls.turno5:  
                 if cls.fecha5 in cls.turno5:
                     cls.libras = True
                     cls.libras_value1 = "Enhorabuena, libras"
