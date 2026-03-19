@@ -35,6 +35,15 @@ git clone https://github.com/Vempar/chatbot_telegram.git
 cd chatbot_telegram
 npm install
 ```
+## 📦 Python Modules
+
+El proyecto utiliza los siguientes módulos principales:
+
+- **python-telegram-bot** → Interacción con la API de Telegram  
+- **telegram_bot_calendar** → Manejo de calendarios para el bot  
+- **dotenv (python-dotenv)** → Gestión de variables de entorno  
+- **logging** → Sistema de logs para debugging y monitoreo   
+
 ## 🤝 Contribuciones
 
 Las contribuciones son bienvenidas.
