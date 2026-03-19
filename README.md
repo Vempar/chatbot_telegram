@@ -16,19 +16,16 @@
 Chatbot que genera informacion para los operarios de rsu madrid
 
 - 📩 Recepción y manejo de mensajes en tiempo real
-- ⚡ Sistema de eventos desacoplado
-- 🔌 Fácil integración con servicios externos
-- 🧩 Arquitectura extensible
+- ⚡ eventos personalizados
+- 🔌 manejo de de fechas con telegram-bot-calendar
+- 🧩 Descarga de archivos
 - 🔁 Manejo de errores y reconexión
 
 ## 🔄 Flujo de funcionamiento
 
 - Telegram envía un evento (mensaje, comando, etc.)
-
 - El provider lo captura
-
 - Se redirige al handler correspondiente
-
 - El bot responde al usuario
 
 ## 📦 Instalación
@@ -43,11 +40,8 @@ npm install
 Las contribuciones son bienvenidas.
 
 - Haz un fork del proyecto
-
 - Crea una nueva rama (feature/nueva-feature)
-
 - Haz commit de tus cambios
-
 - Abre un Pull Request
 
 ## 🙌 Autor
