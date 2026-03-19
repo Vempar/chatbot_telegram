@@ -49,25 +49,25 @@ async def inline_calendar_handler(update: Update, context: ContextTypes.DEFAULT_
     data = query.data
     text = data
 
-    if text == '①':
-        libranza.libras_value1=1
-    elif text == '②':
-        libranza.libras_value1=2
-    elif text == '③':
-        libranza.libras_value1=3
-    elif text == '④':
-        libranza.libras_value1=4
-    elif text == '⑤':
-        libranza.libras_value1=5
+    turno_map = {
+        '①': 1,
+        '②': 2,
+        '③': 3,
+        '④': 4,
+        '⑤': 5,
+    }
 
-    if text in ['①', '②', '③', '④', '⑤']:
+    if text in turno_map:
+        selected_turno = turno_map[text]
         fecha = context.user_data.get("libranza_fecha")
         if not fecha:
             await query.message.reply_text("Primero selecciona una fecha con /libranza.")
             return
 
-        resultado_libranza = libranza.libranza(fecha)
-        await query.message.reply_text(f"Turno seleccionado: {resultado_libranza} para el día {fecha}")
+        resultado_libranza = libranza.libranza(fecha, turno=selected_turno)
+        await query.message.reply_text(
+            f"Turno seleccionado {selected_turno}: {resultado_libranza} para el día {fecha}"
+        )
 
         markup = ReplyKeyboardMarkup(globals.reply_keyboard, one_time_keyboard=False, resize_keyboard=True)
         await query.message.reply_text("¿En qué más puedo ayudarte?", reply_markup=markup)
