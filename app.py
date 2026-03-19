@@ -1,4 +1,5 @@
-from telegram_bot_calendar.base import max_date
+from telegram_bot_calendar.base import max_date, min_date
+from datetime import date
 import logging
 import datetime
 import os
@@ -35,7 +36,7 @@ async def libranza_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Selecciona una fecha:")
     
     # Despliega el teclado de calendario
-    calendar, step = DetailedTelegramCalendar(min_date=2026,max_date=2027).build()
+    calendar, step = DetailedTelegramCalendar(min_date=date(2026,1,1) ,max_date=date(2027,12,31)).build()
     await update.message.reply_text(
         f"Selecciona {LSTEP[step]}:",
         reply_markup=calendar
@@ -50,7 +51,6 @@ async def inline_calendar_handler(update: Update, context: ContextTypes.DEFAULT_
     data = query.data
     text = data
 
-    
 
     if text in turno_map:
         selected_turno = globals.turno_map[text]
