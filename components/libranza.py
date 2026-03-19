@@ -32,34 +32,47 @@ class Libranza_state:
 
         cls.text = value
         # Calculamos la diferencia de días
-        cls.fecha4 = (cls.text - cls.fecha3).days
+        cls.fecha4 = calcular_diferencia_dias(cls.text - cls.fecha3)
         cls.fecha5 = cls.fecha4 + 1
         cls.turno = cls.libras_value1
         
         # se reduce la fecha a un rango de 1 a 35 para que calcule la coincidencia con el ciclo de libranzas
-        cls.fecha5 = ((cls.fecha5 - 1) % 35) + 1
+        while cls.fecha5 > 36:
+            cls.fecha5 -= 35
+        cls.fecha5= cls.fecha5 % 35
+        
         
         # recorre el turno y busca y asigna un valor para determinar si el ususario libra
-        if cls.turno == 1:   
-            if cls.fecha5 in cls.turno1:
-                cls.libras = True
-                cls.libras_value1 = "Enhorabuena, libras"
-        elif cls.turno == 2:   
-            if cls.fecha5 in cls.turno2:
-                cls.libras = True
-                cls.libras_value1 = "Enhorabuena, libras"
-        elif cls.turno == 3:   
-            if cls.fecha5 in cls.turno2:
-                cls.libras = True
-                cls.libras_value1 = "Enhorabuena, libras"
-        elif cls.turno == 4:   
-            if cls.fecha5 in cls.turno4:
-                cls.libras = True
-                cls.libras_value1 = "Enhorabuena, libras"
-        elif cls.turno == 5:   
-            if cls.fecha5 in cls.turno5:
-                cls.libras = True
-                cls.libras_value1 = "Enhorabuena, libras"        
+        if cls.turno == 1:
+            for item in cls.turno1:   
+                if cls.fecha5 in cls.turno1:
+                    cls.libras = True
+                    cls.libras_value1 = "Enhorabuena, libras"
+                    break
+        elif cls.turno == 2:
+            for item in cls.turno2:   
+                if cls.fecha5 in cls.turno2:
+                    cls.libras = True
+                    cls.libras_value1 = "Enhorabuena, libras"
+                    break
+        elif cls.turno == 3:
+            for item in cls.turno3:   
+                if cls.fecha5 in cls.turno3:
+                    cls.libras = True
+                    cls.libras_value1 = "Enhorabuena, libras"
+                    break
+        elif cls.turno == 4:  
+            for item in cls.turno4: 
+                if cls.fecha5 in cls.turno4:
+                    cls.libras = True
+                    cls.libras_value1 = "Enhorabuena, libras"
+                    break
+        elif cls.turno == 5: 
+            for item in cls.turno5:  
+                if cls.fecha5 in cls.turno5:
+                    cls.libras = True
+                    cls.libras_value1 = "Enhorabuena, libras"
+                    break        
         else:
             cls.libras = False
             cls.libras_value1 = "Lo siento, no libras"
