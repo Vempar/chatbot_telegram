@@ -9,11 +9,12 @@ class Libranza_state:
     libras = False
     fecha4 = 0
     fecha5 = 0
+    #tuplas para generar si libras_value1 es true o false
     turno1 = (7, 8, 16, 17, 18, 24, 25, 32, 33, 34)
-    turno2 = (9, 10, 19, 20, 26, 27, 35, 36)
-    turno3 = (11, 12, 21, 22, 28, 29, 37, 38)
-    turno4 = (13, 14, 15, 23, 30, 31)
-    turno5 = (1, 2, 3, 4, 5, 6)
+    turno2 = (1,9, 10, 19, 20, 26, 27, 35)
+    turno3 = (2,3,4,10,11,18,19,20,28,29,)
+    turno4 = (3,4,11,12,13,21,22,30,31,32)
+    turno5 = (4,5,6,14,15,23,24,25,31,32)
 
     @classmethod
     def set_text(cls, value):
