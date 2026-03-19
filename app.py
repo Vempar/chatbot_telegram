@@ -7,20 +7,20 @@ from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKey
 from telegram.ext import Application, ContextTypes, MessageHandler, filters, CommandHandler, CallbackQueryHandler
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
-#telegram_token=os.getenv("TOKEN")
-telegram_token='904248358:AAE_NAxG-Kp0VYCs-VVO709SdKcQrz4PXAU'
+telegram_token=os.getenv("TOKEN")
+
 #date_libranza=datetime.date.today()
 
 #menu inicio con las opciones de turno
 
 
-async def start(update,context):
+async def start_command(update,context):
     # Definimos el teclado de respuesta
     markup = ReplyKeyboardMarkup(globals.reply_keyboard, one_time_keyboard=False, resize_keyboard=True)
     
     #configuramos el comando start para escribir una respuesta
     await update.message.reply_text(
-        globals.start_text,
+        globals.texto_start,
         reply_markup=markup
     )
 
@@ -172,11 +172,11 @@ def main():
     bot = Application.builder().token(telegram_token).build()
     #funcion que responde al usuario con echo
     bot.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
-    bot.add_handler(CommandHandler("start", start))
+    bot.add_handler(CommandHandler("start", start_command))
     bot.add_handler(CommandHandler("help", help_command))
     bot.add_handler(CommandHandler("libranza", libranza_command))
     bot.add_handler(CallbackQueryHandler(inline_calendar_handler))
-    bot.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, start))
+    bot.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, start_command))
     bot.add_handler(MessageHandler(filters.PHOTO, photo_handler))
     bot.run_polling(allowed_updates=Update.ALL_TYPES)
 
