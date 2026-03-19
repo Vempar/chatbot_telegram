@@ -36,7 +36,7 @@ async def libranza_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Selecciona una fecha:")
     
     # Despliega el teclado de calendario
-    calendar, step = DetailedTelegramCalendar(min_date=date(2026,1,1) ,max_date=date(2027,12,31)).build()
+    calendar, step = DetailedTelegramCalendar(min_date=date(2026,1,1)).build()
     await update.message.reply_text(
         f"Selecciona {LSTEP[step]}:",
         reply_markup=calendar
